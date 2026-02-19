@@ -1,0 +1,13 @@
+rules:
+
+  scale_down:
+    cpu_less_than: 10
+    replicas: 0
+
+  scale_up:
+    cpu_greater_than: 70
+    use_prediction: true
+
+  maintain:
+    cpu_between: [10, 70]
+    action: maintain

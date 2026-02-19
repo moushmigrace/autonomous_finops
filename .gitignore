@@ -1,0 +1,156 @@
+# ===============================
+# PYTHON
+# ===============================
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Python cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ===============================
+# ENVIRONMENT VARIABLES
+# ===============================
+
+.env
+.env.*
+!.env.example
+
+# ===============================
+# LOG FILES
+# ===============================
+
+*.log
+logs/
+*.out
+
+# ===============================
+# DATABASE FILES
+# ===============================
+
+*.db
+*.sqlite3
+
+# ===============================
+# VS CODE
+# ===============================
+
+.vscode/
+.history/
+
+# ===============================
+# OS FILES
+# ===============================
+
+.DS_Store
+Thumbs.db
+
+# ===============================
+# DOCKER
+# ===============================
+
+docker-compose.override.yml
+
+# ===============================
+# TERRAFORM
+# ===============================
+
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Crash log files
+crash.log
+
+# ===============================
+# KUBERNETES
+# ===============================
+
+kubeconfig
+*.kubeconfig
+
+# ===============================
+# NODE (for your app folder)
+# ===============================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===============================
+# BUILD FILES
+# ===============================
+
+dist/
+build/
+*.egg-info/
+
+# ===============================
+# JUPYTER
+# ===============================
+
+.ipynb_checkpoints/
+
+# ===============================
+# TEST OUTPUT
+# ===============================
+
+coverage/
+htmlcov/
+
+# ===============================
+# IDE
+# ===============================
+
+.idea/
+
+# ===============================
+# SYSTEM TEMP FILES
+# ===============================
+
+*.tmp
+*.temp
+
+# ===============================
+# AWS
+# ===============================
+
+.aws/
+
+# ===============================
+# KUBERNETES SECRETS
+# ===============================
+
+secrets.yaml
+*.secret.yaml
+
+# ===============================
+# PROMETHEUS / GRAFANA LOCAL DATA
+# ===============================
+
+prometheus-data/
+grafana-data/
+
+# ===============================
+# NODE JS
+# ===============================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+dist/
+build/

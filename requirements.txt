@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+kubernetes
+prometheus-api-client
+numpy
+pandas
+pyyaml
+python-dotenv

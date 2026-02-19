@@ -1,0 +1,7 @@
+cpu_scale_down: 10
+
+cpu_scale_up: 70
+
+memory_scale_up: 80
+
+idle_time_minutes: 15
