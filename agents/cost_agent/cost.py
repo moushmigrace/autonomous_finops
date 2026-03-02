@@ -55,8 +55,7 @@ class CostAgent:
 
                 if action["deployment"] == m["deployment"]:
 
-                    replicas_after = action["replicas"]
-
+                    replicas_after = action["desired_replicas"]
                     break
 
             total_cost_before += replicas_before * COST_PER_REPLICA
