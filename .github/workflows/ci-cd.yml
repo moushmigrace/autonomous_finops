@@ -3,8 +3,8 @@ name: CI/CD - Build & Deploy
 on:
   push:
     branches:
-        - main
-        - feature/*
+      - main
+      - feature/**
 
   workflow_dispatch:
 
@@ -20,6 +20,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      # 🔐 Login to GHCR
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
@@ -27,6 +28,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # 🐳 Build & Push Agent
       - name: Build & Push Agent
         uses: docker/build-push-action@v5
         with:
@@ -35,6 +37,7 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository }}/finops-agent:latest
 
+      # 🐳 Build & Push Backend
       - name: Build & Push Backend
         uses: docker/build-push-action@v5
         with:
@@ -43,6 +46,7 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository }}/backend-app:latest
 
+      # ☁ Configure AWS
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -50,14 +54,30 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: us-east-1
 
+      # 🔗 Connect to EKS
       - name: Update kubeconfig
         run: |
           aws eks update-kubeconfig \
             --name finops-cluster \
             --region us-east-1
 
+      # 🚀 Deploy Safely (Correct Order)
       - name: Deploy to EKS
         run: |
-          kubectl apply -f deployment/kubernetes/
+          # 1️⃣ Ensure namespace exists (safe & idempotent)
+          kubectl create namespace finops --dry-run=client -o yaml | kubectl apply -f -
+
+          # 2️⃣ Apply RBAC & Secret
+          kubectl apply -f deployment/kubernetes/rbac.yaml
+          kubectl apply -f deployment/kubernetes/secret.yaml
+
+          # 3️⃣ Apply Deployments
+          kubectl apply -f deployment/kubernetes/agent-deployment.yaml
+          kubectl apply -f deployment/kubernetes/app-deployment.yaml
+
+          # 4️⃣ Apply Service
+          kubectl apply -f deployment/kubernetes/app-service.yaml
+
+          # 5️⃣ Restart Pods
           kubectl rollout restart deployment finops-agent -n finops
           kubectl rollout restart deployment backend-app -n finops
