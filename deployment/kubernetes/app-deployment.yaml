@@ -1,53 +1,37 @@
 apiVersion: apps/v1
-
 kind: Deployment
 
 metadata:
-
   name: backend-app
-
   namespace: finops
 
 spec:
-
   replicas: 3
 
   selector:
-
     matchLabels:
-
       app: backend-app
 
   template:
-
     metadata:
-
       labels:
-
         app: backend-app
 
     spec:
-
       containers:
+        - name: backend-app
 
-      - name: backend-app
+          image: backend-app:latest
+          imagePullPolicy: Never
 
-        image: YOUR_DOCKER_USERNAME/backend-app:latest
+          ports:
+            - containerPort: 3000
 
-        ports:
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
 
-        - containerPort: 3000
-
-        resources:
-
-          requests:
-
-            cpu: "100m"
-
-            memory: "128Mi"
-
-          limits:
-
-            cpu: "500m"
-
-            memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

@@ -11,14 +11,14 @@ load_dotenv()
 # ==============================
 
 IDLE_CPU_THRESHOLD = 10
-SCALE_UP_THRESHOLD = 70
+SCALE_UP_THRESHOLD = 30
 SCALE_DOWN_THRESHOLD = 10
 
 # ==============================
 # Replica limits (read from .env)
 # ==============================
 
-MIN_REPLICAS = int(os.getenv("MIN_REPLICAS", "0"))
+MIN_REPLICAS = int(os.getenv("MIN_REPLICAS", "1"))
 MAX_REPLICAS = int(os.getenv("MAX_REPLICAS", "10"))
 DEFAULT_REPLICAS = int(os.getenv("DEFAULT_REPLICAS", "2"))
 

@@ -23,7 +23,17 @@ class Supervisor:
 
         self.logger.info(f"Collected metrics: {metrics}")
 
-        prediction = self.predictor.predict(metrics)
+        predictions = []
+
+        for metric in metrics:
+            cpu = metric["cpu"]
+            prediction = self.predictor.predict(cpu)
+            predictions.append({
+                "deployment": metric["deployment"],
+                "predicted_cpu": prediction
+            })
+
+        self.logger.info(f"Predictions: {predictions}")
 
         actions = self.planner.plan(metrics)
 

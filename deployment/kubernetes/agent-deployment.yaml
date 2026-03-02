@@ -23,9 +23,8 @@ spec:
       containers:
         - name: finops-agent
 
-          image: ghcr.io/moushmi-grace/autonomous-finops-agent/finops-agent:latest
-
-          imagePullPolicy: Always
+          image: finops-agent:latest
+          imagePullPolicy: Never
 
           envFrom:
             - secretRef:
