@@ -23,8 +23,7 @@ spec:
       containers:
         - name: finops-agent
 
-          image: ghcr.io/moushmi-grace/autonomous-finops-agent/finops-agent:latest
-
+          image: ghcr.io/<your-github-username>/<repo-name>/finops-agent:latest
           imagePullPolicy: Always
 
           envFrom:

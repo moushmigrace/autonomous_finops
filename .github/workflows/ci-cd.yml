@@ -1,4 +1,4 @@
-name: Build & Deploy FinOps Agent
+name: CI/CD - Build & Deploy
 
 on:
   push:
@@ -7,8 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy-agent:
-
+  deploy:
     runs-on: ubuntu-latest
 
     permissions:
@@ -16,18 +15,17 @@ jobs:
       packages: write
 
     steps:
-
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Login to GitHub Container Registry
+      - name: Login to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and Push Agent Image
+      - name: Build & Push Agent
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -35,7 +33,15 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository }}/finops-agent:latest
 
-      - name: Configure AWS credentials
+      - name: Build & Push Backend
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: deployment/docker/app.Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository }}/backend-app:latest
+
+      - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
@@ -45,9 +51,11 @@ jobs:
       - name: Update kubeconfig
         run: |
           aws eks update-kubeconfig \
-          --name finops-cluster \
-          --region us-east-1
+            --name finops-cluster \
+            --region us-east-1
 
-      - name: Deploy agent
+      - name: Deploy to EKS
         run: |
-          kubectl apply -f deployment/kubernetes/agent-deployment.yaml
+          kubectl apply -f deployment/kubernetes/
+          kubectl rollout restart deployment finops-agent -n finops
+          kubectl rollout restart deployment backend-app -n finops

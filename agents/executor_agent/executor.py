@@ -10,10 +10,12 @@ class ExecutorAgent:
 
         for action in actions:
 
-            if action["action"] == "scale_down":
+            namespace = action["namespace"]
+            deployment = action["deployment"]
+            desired = action["desired_replicas"]
 
-                self.scaler.scale(
-                    action["namespace"],
-                    action["deployment"],
-                    action["replicas"]
-                )
+            self.scaler.scale(
+              namespace,
+              deployment,
+              desired
+        )

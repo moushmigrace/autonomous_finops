@@ -1,14 +1,30 @@
-import numpy as np
-
 class PredictorAgent:
 
-    def predict(self, cpu_history):
+    def __init__(self):
 
-        if len(cpu_history) < 2:
-            return cpu_history[-1]
+        self.history = []
 
-        trend = np.polyfit(range(len(cpu_history)), cpu_history, 1)
+        self.window = 10
 
-        future = trend[0] * len(cpu_history) + trend[1]
 
-        return max(0, future)
+    def predict(self, cpu):
+
+        cpu = float(cpu)
+
+        self.history.append(cpu)
+
+        if len(self.history) > self.window:
+            self.history.pop(0)
+
+        if len(self.history) < 3:
+            return cpu
+
+        # moving average prediction
+        avg = sum(self.history) / len(self.history)
+
+        # detect upward trend
+        trend = self.history[-1] - self.history[0]
+
+        predicted = avg + (trend * 0.5)
+
+        return max(0, predicted)

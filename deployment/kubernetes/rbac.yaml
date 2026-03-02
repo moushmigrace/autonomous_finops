@@ -7,33 +7,31 @@ metadata:
 ---
 
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
+  namespace: finops
   name: finops-agent-role
-
 rules:
-
 - apiGroups: ["apps"]
   resources: ["deployments"]
-  verbs: ["get", "list", "watch", "patch"]
+  verbs: ["get", "list", "watch", "patch", "update"]
 
-- apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["get", "list"]
+- apiGroups: ["apps"]
+  resources: ["deployments/scale"]
+  verbs: ["get", "patch", "update"]
 
 ---
 
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
-  name: finops-agent-binding
-
+  name: finops-agent-rolebinding
+  namespace: finops
 subjects:
 - kind: ServiceAccount
   name: finops-agent
   namespace: finops
-
 roleRef:
-  kind: ClusterRole
+  kind: Role
   name: finops-agent-role
   apiGroup: rbac.authorization.k8s.io

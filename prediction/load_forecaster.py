@@ -1,15 +1,22 @@
+import math
+
 class LoadForecaster:
 
-    def forecast(self, metrics):
+    def __init__(self, forecast_steps=3):
+        self.forecast_steps = forecast_steps
 
-        cpu = metrics["cpu"]
+    def forecast(self, cpu_history):
 
-        if cpu > 70:
+        if len(cpu_history) < 3:
+            return cpu_history[-1] if cpu_history else 0
 
-            return {"expected_replicas": 5}
+        # Simple linear trend
+        start = cpu_history[0]
+        end = cpu_history[-1]
 
-        if cpu < 10:
+        slope = (end - start) / len(cpu_history)
 
-            return {"expected_replicas": 0}
+        # Forecast future CPU
+        forecast_cpu = end + slope * self.forecast_steps
 
-        return {"expected_replicas": 2}
+        return max(0, forecast_cpu)

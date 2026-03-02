@@ -11,14 +11,18 @@ load_dotenv()
 # ==============================
 
 IDLE_CPU_THRESHOLD = 10
-SCALE_UP_THRESHOLD = 70
+SCALE_UP_THRESHOLD = 30
 SCALE_DOWN_THRESHOLD = 10
 
 # ==============================
 # Replica limits (read from .env)
 # ==============================
 
-MIN_REPLICAS = int(os.getenv("MIN_REPLICAS", "0"))
+IDLE_DURATION_THRESHOLD = int(os.getenv("IDLE_DURATION_THRESHOLD", "300"))  # 5 min
+COOLDOWN_PERIOD = int(os.getenv("COOLDOWN_PERIOD", "120"))  # 2 min
+TARGET_CPU = int(os.getenv("TARGET_CPU", "30"))
+
+MIN_REPLICAS = int(os.getenv("MIN_REPLICAS", "1"))
 MAX_REPLICAS = int(os.getenv("MAX_REPLICAS", "10"))
 DEFAULT_REPLICAS = int(os.getenv("DEFAULT_REPLICAS", "2"))
 
@@ -32,6 +36,10 @@ MONITOR_INTERVAL = int(os.getenv("MONITOR_INTERVAL", "30"))
 # ==============================
 # Cost settings
 # ==============================
+
+FORECAST_WINDOW = 5
+FORECAST_THRESHOLD = 65
+PREDICTIVE_ENABLED = True
 
 COST_PER_REPLICA = float(os.getenv("COST_PER_REPLICA", "0.01"))
 
