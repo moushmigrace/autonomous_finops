@@ -25,12 +25,12 @@ spec:
       containers:
         - name: finops-agent
 
-          image: ghcr.io/moushmigrace/autonomous-finops-agent/finops-agent:latest
+          image: ghcr.io/moushmigrace/autonomous_finops/finops-agent:latest
           imagePullPolicy: Always
 
           envFrom:
             - secretRef:
-                name: finops-agent-env
+                name: finops-agent-secret
 
           resources:
             requests:

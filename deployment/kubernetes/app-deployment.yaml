@@ -21,7 +21,7 @@ spec:
       containers:
         - name: backend-app
 
-          image: ghcr.io/moushmigrace/autonomous-finops-agent/backend-app:latest
+          image: ghcr.io/moushmigrace/autonomous_finops/backend-app:latest
           imagePullPolicy: Always
 
           ports:
