@@ -19,11 +19,12 @@ spec:
 
     spec:
       serviceAccountName: finops-agent
+      -name: ghrc-secret
 
       containers:
         - name: finops-agent
 
-          image: ghcr.io/<your-github-username>/<repo-name>/finops-agent:latest
+          image: ghcr.io/moushmigrace/autonomous-finops-agent/finops-agent:latest
           imagePullPolicy: Always
 
           envFrom:
