@@ -63,17 +63,10 @@ PROMETHEUS_USE_MOCK = os.getenv(
 # Kubernetes configuration
 # ==============================
 
-K8S_NAMESPACE = os.getenv("K8S_NAMESPACE", "default")
+K8S_NAMESPACE = True
+K8S_DEPLOYMENT_NAME = "backend-app"
 
-K8S_DEPLOYMENT_NAME = os.getenv(
-    "K8S_DEPLOYMENT_NAME",
-    "backend-app"
-)
-
-KUBERNETES_IN_CLUSTER = os.getenv(
-    "KUBERNETES_IN_CLUSTER",
-    "false"
-).lower() == "true"
+KUBERNETES_IN_CLUSTER = True
 
 # ==============================
 # AWS configuration
