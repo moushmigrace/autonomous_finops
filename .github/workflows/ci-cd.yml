@@ -57,13 +57,19 @@ jobs:
       - name: Update kubeconfig
         run: |
           aws eks update-kubeconfig \
-            --name finops-cluster \
-            --region us-east-1
+            --region us-east-1\
+            --name finops-cluster 
+            
+          kubectl get nodes  
 
       # 🚀 Deploy
       - name: Deploy to EKS
         run: |
-          kubectl create namespace finops --dry-run=client -o yaml | kubectl apply -f -
+          aws eks update-kubeconfig --region us-east-1 --name finops-cluster
+
+          kubectl get nodes
+
+          kubectl create namespace finops --dry-run=client -o yaml | kubectl apply --validate=false -f -
 
           kubectl apply -f deployment/kubernetes/rbac.yaml
           kubectl apply -f deployment/kubernetes/secret.yaml
