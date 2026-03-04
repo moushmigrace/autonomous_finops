@@ -63,7 +63,7 @@ PROMETHEUS_USE_MOCK = os.getenv(
 # Kubernetes configuration
 # ==============================
 
-K8S_NAMESPACE = True
+K8S_NAMESPACE = "finops"
 K8S_DEPLOYMENT_NAME = "backend-app"
 
 KUBERNETES_IN_CLUSTER = True
