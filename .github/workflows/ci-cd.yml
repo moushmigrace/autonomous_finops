@@ -53,8 +53,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: us-east-1
 
-     - name: Check AWS identity
-       run: aws sts get-caller-identity  
+      - name: Check AWS identity
+        run: aws sts get-caller-identity  
 
       # 🔗 Connect to EKS
       - name: Update kubeconfig
