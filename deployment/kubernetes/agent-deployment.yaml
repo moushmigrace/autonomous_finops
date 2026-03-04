@@ -19,7 +19,8 @@ spec:
 
     spec:
       serviceAccountName: finops-agent
-      -name: ghrc-secret
+      imagePullSecrets:
+        - name: ghcr-secret
 
       containers:
         - name: finops-agent
