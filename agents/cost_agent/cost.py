@@ -1,5 +1,10 @@
 from shared.logger import get_logger
-from shared.constants import COST_PER_REPLICA, MIN_REPLICAS, MAX_REPLICAS
+from shared.constants import (
+    COST_PER_REPLICA,
+    MIN_REPLICAS,
+    MAX_REPLICAS,
+    IDLE_DURATION_THRESHOLD
+)
 
 
 class CostAgent:
@@ -9,13 +14,17 @@ class CostAgent:
         self.logger = get_logger("CostAgent")
 
 
-    def optimize(self, cpu, replicas):
+    def optimize(self, cpu, replicas, idle_for=0):
 
         """
         Optimize replica count based on CPU and cost efficiency
         """
 
         original = replicas
+
+        # Prevent scaling to zero unless idle threshold reached
+        if replicas == 1 and idle_for < IDLE_DURATION_THRESHOLD:
+            return replicas
 
         # If CPU very low → reduce replicas
         if cpu < 10 and replicas > MIN_REPLICAS:
@@ -34,7 +43,6 @@ class CostAgent:
             )
 
         return replicas
-
 
     def calculate(self, metrics, actions):
 

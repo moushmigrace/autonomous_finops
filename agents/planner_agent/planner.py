@@ -57,7 +57,7 @@ class PlannerAgent:
                     desired += 1
 
             # Cost optimization
-            desired = self.cost_agent.optimize(cpu, desired)
+            desired = self.cost_agent.optimize(cpu, desired,idle_for)
 
             # Safety
             desired = max(0, desired)
