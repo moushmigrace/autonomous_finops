@@ -22,7 +22,7 @@ IDLE_DURATION_THRESHOLD = int(os.getenv("IDLE_DURATION_THRESHOLD", "300"))  # 5 
 COOLDOWN_PERIOD = int(os.getenv("COOLDOWN_PERIOD", "120"))  # 2 min
 TARGET_CPU = int(os.getenv("TARGET_CPU", "30"))
 
-MIN_REPLICAS = int(os.getenv("MIN_REPLICAS", "1"))
+MIN_REPLICAS = int(os.getenv("MIN_REPLICAS", "0"))
 MAX_REPLICAS = int(os.getenv("MAX_REPLICAS", "10"))
 DEFAULT_REPLICAS = int(os.getenv("DEFAULT_REPLICAS", "2"))
 
