@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - feature/test
-    paths:
-      - "infrastructure/terraform/**"
+    
 
 jobs:
 
