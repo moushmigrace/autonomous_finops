@@ -47,6 +47,8 @@ class PlannerAgent:
                     desired = math.ceil(
                         replicas * cpu / TARGET_CPU
                     )
+                    if desired == 0 and idle_for < IDLE_DURATION_THRESHOLD:
+                        desired = 1
 
                 # Proactive forecast scaling
                 if forecast_cpu > TARGET_CPU:
